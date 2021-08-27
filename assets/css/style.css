@@ -1,0 +1,8 @@
+.menuItem {
+    display: flex;
+    width: 100%;
+}
+
+.profilePicture {
+    max-width: 50px !important;
+}
