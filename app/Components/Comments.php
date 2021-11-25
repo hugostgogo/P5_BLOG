@@ -1,46 +1,25 @@
-<div class="bg-red-500 mt-3 p-3">
-	<h1 class="text-3xl text-white">Commentaires</h1>
+<?php
 
-	<?php foreach($comments as $comment):?>
-		<div class="my-2 p-2 rounded bg-gray-900 text-white">
+use App\Models\User;
+?>
+
+<div class="rounded p-2 flex flex-col gap-3">
+	<span class="text-xl">Commentaires (<?= $post->commentsCount ?>)</span>
+	<div class="flex flex-col gap-2">
+		<?php foreach ($post->comments as $comment) : ?>
 			<div>
-				<div>
-					<?php echo $comment->author_id ?>
-				</div>
-				<span><?php echo $comment->created_at ?></span>
+				<?php
+				$model = get_class($comment);
+				?>
+				<?php include($_SERVER['DOCUMENT_ROOT'] . $model::card) ?>
 			</div>
-			<?php echo $comment->content ?>			
-		</div>
-	<?php endforeach; ?>
-	<div class="flex">
-		<div id="inputWrapper">
-			<textarea id="commentInput"></textarea>
-		</div>
-		<div id="sendCommentButton" class="rounded bg-gray-900 p-3 text-white cursor-pointer">Commenter</div>
+		<?php endforeach; ?>
 	</div>
-	
+
+	<?php if (User::isLogged()) : ?>
+		<div class="flex justify-center items-stretch gap-x-2">
+			<textarea class="flex-grow rounded p-3 text-black" placeholder="Votre commentaire..." id="commentText"></textarea>
+			<button class="bg-gray-900 p-3 px-5 rounded" onclick="sendComment(<?= $post->id ?>, <?= User::getLogged()->id ?>)">Commenter</button>
+		</div>
+	<?php endif; ?>
 </div>
-
-<style> 
-	#sendCommentButton {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-
-	#inputWrapper {
-		flex-grow: 1;
-		display: flex;
-		padding-right: 10px;
-	}
-
-	#commentInput{
-		display: block;
-		flex-grow: 1;
-		padding: 5px;
-	}
-
-	#commentInput:focus{
-		outline: none;
-	}
-</style>

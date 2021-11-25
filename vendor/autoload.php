@@ -4,14 +4,4 @@
 
 require_once __DIR__ . '/composer/autoload_real.php';
 
-// Explicitly including the dispatch framework,
-// and our functions.php file
-require 'app/includes/dispatch.php';
-require 'app/includes/functions.php';
-
-// Models
-require 'app/Models/Article.php';
-require 'app/Models/Comment.php';
-require 'app/Models/User.php';
-
 return ComposerAutoloaderInit352930101c1dc3fb72305f7934017105::getLoader();

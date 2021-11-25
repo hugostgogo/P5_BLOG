@@ -1,9 +1,20 @@
 <?php
 namespace App\Models;
 
-use PDO;
+use App\Controllers\PostsController;
+use App\Controllers\DB;
 
-class Comment {
+use App\Controllers\UsersController;
+
+use App\Traits\LikeableTrait as Likeable;
+
+class Comment extends Base {
+
+
+    const card = '/app/Components/Cards/commentCard.html.php';
+
+    const table = 'comments';
+
     public $id;
     public $post_id;
     public $content;
@@ -11,43 +22,28 @@ class Comment {
     public $is_active;
     public $created_at;
 
+    public $author;
+
     function __construct($args) {
-        $this->id = $args['id'];
-        $this->post_id = $args['post_id'];
-        $this->content = $args['content'];
-        $this->author_id = $args['author_id'];
-        $this->is_active = $args['is_active'];
-        $this->created_at = $args['created_at'];
+        $this->id = isset($args['id']) ? $args['id'] : NULL;
+        $this->post_id = isset($args['post_id']) ? $args['post_id'] : NULL;
+        $this->content = isset($args['content']) ? $args['content'] : NULL;
+        $this->author_id = isset($args['author_id']) ? $args['author_id'] : NULL;
+        $this->is_active = isset($args['is_active']) ? $args['is_active'] : NULL;
+        $this->created_at = isset($args['created_at']) ? $args['created_at'] : NULL;
+
+        if (isset($this->author_id)) $this->author = UsersController::getSingle($this->author_id);
+
+
+        parent::__construct();
+
 
         return $this;
     }
 
-    static function getAll () {
-        $db = new PDO('mysql:host=localhost;dbname=blog', 'root', '');
-        $req = $db->prepare("SELECT * FROM comments");
-        $req->execute();
-        $all = $req->fetchAll();
-
-        $result = array();
-        foreach ($all as $comment) {
-            array_push($result, new Comment($comment)); 
-        }
-
-        return $result;
-    }
-
-    static function getUnconfirmed () {
-        $db = new PDO('mysql:host=localhost;dbname=blog', 'root', '');
-        $req = $db->prepare("SELECT * FROM comments WHERE is_active = 1");
-        $req->execute();
-        $all = $req->fetchAll();
-
-        $result = array();
-        foreach ($all as $comment) {
-            array_push($result, new Comment($comment)); 
-        }
-
-        return $result;
+    public function activate () {
+        $record = DB::update('comments', $this->id, [ "is_active" => 1 ]);
+        return new Comment($record);
     }
 
 }

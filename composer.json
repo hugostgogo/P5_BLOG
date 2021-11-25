@@ -1,6 +1,16 @@
 {
     "require": {
-	"dflydev/markdown": "v1.0.2",
-	"suin/php-rss-writer": ">=1.0"
+	"phpmailer/phpmailer": "^6.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "App\\DB\\": "app/Controllers/DB.php",
+            "App\\Routing\\": "app/Routing",
+            "App\\Models\\": "app/Models",
+            "App\\Traits\\": "app/Traits",
+            "App\\Controllers\\": "app/Controllers",
+            "App\\Mails\\": "app/Mails"
+        }
     }
 }

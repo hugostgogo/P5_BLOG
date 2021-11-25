@@ -1,99 +1,77 @@
 <?php
+
 namespace App\Models;
 
-use PDO;
-use App\Models\Comment;
+use App\Controllers\DB;
 
-class Article {
+use App\Models\Comment;
+use App\Models\Base;
+
+use App\Traits\LikeableTrait as Likeable;
+
+class Article extends Base
+{
+    use Likeable { Likeable::__construct as __lconstruct; }
 
     public $id;
     public $title;
+    public $chapo;
     public $content;
+
+    public $updated_at;
     public $created_at;
 
     public $comments;
+    public $commentsCount;
 
-    function __construct($args) {
-        $this->id = $args['id'];
-        $this->title = $args['title'];
-        $this->content = $args['content'];
-        $this->created_at = $args['created_at'];
+    const card = '/app/Components/Cards/articleCard.html.php';
+    const form = '/app/Components/Forms/articleForm.html.php';
+
+    const label = 'Article';
+    const table = 'posts';
+
+    const sortKeys = [
+        'Date de création' => 'created_at',
+        'Titre' => 'title',
+        'Contenu' => 'content',
+        'Nombre de commentaires' => 'commentsCount',
+        'Nombre de likes' => 'likesCount'
+    ];
+
+    function __construct($args)
+    {
+        $this->id = isset($args['id']) ? $args['id'] : NULL;
+        $this->title = isset($args['title']) ? $args['title'] : NULL;
+        $this->chapo = isset($args['chapo']) ? $args['chapo'] : NULL;
+        $this->content = isset($args['content']) ? $args['content'] : NULL;
+
+        $this->updated_at = isset($args['updated_at']) ? $args['updated_at'] : NULL;
+        $this->created_at = isset($args['created_at']) ? $args['created_at'] : NULL;
+
+        if (isset($this->id)) {
+            $this->comments = $this->getComments();
+            $this->commentsCount = count($this->comments);
+        }
+
+        parent::__construct();
+        $this->__lconstruct();
 
         return $this;
     }
 
-    static function get ($id = NULL) {
-        if (isset($id)) {
-            $db = new PDO('mysql:host=localhost;dbname=blog', 'root', '');
-            $req = $db->prepare("SELECT * FROM posts WHERE id = :id");
-            $req->bindParam(':id', $id, PDO::PARAM_INT);
-            $req->execute();
-            $res = $req->fetch();
-
-            return new Article($res);
-        }
-    }
-
-    static function getAll () {
-        $db = new PDO('mysql:host=localhost;dbname=blog', 'root', '');
-        $req = $db->prepare("SELECT * FROM posts");
-        $req->execute();
-        $all = $req->fetchAll();
+    function getComments()
+    {
+        $all = DB::select("SELECT * FROM comments WHERE post_id = $this->id AND is_active = 1", true);
 
         $result = array();
-        foreach ($all as $post) {
-            array_push($result, new Article($post)); 
-        }
 
-        return $result;
-    }
-
-    function getComments () {
-        $db = new PDO('mysql:host=localhost;dbname=blog', 'root', '');
-        $req = $db->prepare("SELECT * FROM comments WHERE post_id = :id AND is_active");
-        $req->bindParam(':id', $this->id, PDO::PARAM_INT);
-        $req->execute();
-        $all = $req->fetchAll();
-
-        $result = array();
-        
-        foreach ($all as $post) {
-            array_push($result, new Comment($post)); 
-        }
-
-        return $result;
-    }
-
-    static function getAllWithComments () {
-
-        $db = new PDO('mysql:host=localhost;dbname=blog', 'root', '');
-        $req = $db->prepare("SELECT * FROM posts");
-        $req->execute();
-        $all = $req->fetchAll();
-
-        $posts = array();
-        foreach ($all as $post) {
-            array_push($posts, new Article($post)); 
-        }
-
-        
-        foreach ($posts as $post) {
-            $req = $db->prepare("SELECT * FROM comments WHERE post_id = :id AND is_active");
-            $req->bindParam(':id', $post->id, PDO::PARAM_INT);
-            $req->execute();
-            $all = $req->fetchAll();
-
-            $result = array();
-        
-            foreach ($all as $comment) {
-                array_push($result, new Comment($comment)); 
+        if (count($all) > 0) {
+            foreach ($all as $post) {
+                array_push($result, new Comment($post));
             }
-
-            $post->comments = $result;
         }
 
-        return $posts;
+
+        return $result;
     }
 }
-
-?>

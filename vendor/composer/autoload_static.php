@@ -6,20 +6,55 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit352930101c1dc3fb72305f7934017105
 {
-    public static $prefixesPsr0 = array (
-        'd' => 
+    public static $prefixLengthsPsr4 = array (
+        'P' => 
         array (
-            'dflydev\\markdown' => 
-            array (
-                0 => __DIR__ . '/..' . '/dflydev/markdown/src',
-            ),
+            'PHPMailer\\PHPMailer\\' => 20,
         ),
-        'S' => 
+        'A' => 
         array (
-            'Suin\\RSSWriter' => 
-            array (
-                0 => __DIR__ . '/..' . '/suin/php-rss-writer/Source',
-            ),
+            'App\\Traits\\' => 11,
+            'App\\Routing\\' => 12,
+            'App\\Models\\' => 11,
+            'App\\Mails\\' => 10,
+            'App\\DB\\' => 7,
+            'App\\Controllers\\' => 16,
+            'App\\' => 4,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'App\\Traits\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/Traits',
+        ),
+        'App\\Routing\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/Routing',
+        ),
+        'App\\Models\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/Models',
+        ),
+        'App\\Mails\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/Mails',
+        ),
+        'App\\DB\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/Controllers/DB.php',
+        ),
+        'App\\Controllers\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/Controllers',
+        ),
+        'App\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app',
         ),
     );
 
@@ -30,7 +65,8 @@ class ComposerStaticInit352930101c1dc3fb72305f7934017105
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixesPsr0 = ComposerStaticInit352930101c1dc3fb72305f7934017105::$prefixesPsr0;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit352930101c1dc3fb72305f7934017105::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit352930101c1dc3fb72305f7934017105::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInit352930101c1dc3fb72305f7934017105::$classMap;
 
         }, null, ClassLoader::class);

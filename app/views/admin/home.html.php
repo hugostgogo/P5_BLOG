@@ -1,38 +1,44 @@
-<div class="grid md:grid-cols-1 sm:grid-cols-1 gap-4 p-3" id="postsWrapper">
-    <div class="text-white text-3xl">Posts</div>
+<?php
+$pages = [
+    [
+        "url" => "admin/comments/validation",
+        "label" => "Commentaires en attente de validation ($commentsCount)",
+        "icon" => "comment-multiple",
+    ],
+    [
+        "url" => "admin/users",
+        "label" => "Utilisateurs",
+        "icon" => "account-multiple",
+    ],
+]
+?>
+<div class="flex-grow flex flex-col p-3">
+    <div class="flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <button class="rounded-full w-10 h-10 border-2 flex items-center justify-center" onclick="changeRoute('/')">
+                <i class="mdi mdi-home text-2xl"></i>
+            </button>
+            <h1 class="text-white text-3xl">
+                <?= config('blog.title') ?>
+            </h1>
+        </div>
+    </div>
+    <div class="
+        flex-grow
+        grid
 
-	<?php
-	foreach($posts as $post):
-	?>
-		<div class="shadow-lg rounded cursor-pointer bg-gray-800 p-5" onclick="changeRoute('<?php echo 'article/' . $post->id ?>')">
-			<h1 class="font-bold text-lg mb-3 text-white"><?php echo $post->title ?></h1>
-			<span class="text-white text-opacity-75">
-				<?php echo $post->content ?>
-			</span>
-            <div>
-            <div>Commentaires (<?php echo count($post->comments); ?>)</div>
-            <?php foreach ($post->comments as $comment): ?>
-                <div class="text-sm text-gray-400">
-                    <?php echo $comment->author_id ?>
-                    <?php echo $comment->created_at ?>
-                    <?php echo $comment->content ?>
-                </div>
-            <?php endforeach; ?>
+        grid-rows-2
+        grid-cols-1
+
+        gap-5 
+        p-3
+    ">
+        <?php foreach ($pages as $page) : ?>
+            <div class="transition-all hover:text-white duration-300 ease-in-out transform bg-gray-800 text-gray-500 rounded flex flex-col justify-center items-center text-center text-xl cursor-pointer" onclick="changeRoute('<?= $page['url'] ?>')">
+                <i class="text-9xl mdi mdi-<?= $page['icon'] ?>"></i>
+                <h1><?= $page['label'] ?></h1>
             </div>
-		</div>
-	<?php endforeach;?>
+        <?php endforeach; ?>
+    </div>
+
 </div>
-
-<script>
-
-	function changeRoute(route, $event) {
-		window.location.href = route
-	}
-</script>
-
-<style>
-#postsWrapper {
-    max-height: 40vh;
-    overflow: auto;
-}
-</style>
