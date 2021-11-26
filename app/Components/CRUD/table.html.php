@@ -2,7 +2,7 @@
 
     <!-- HEADER -->
     <div class="w-full flex flex-col">
-        <div class="flex justify-between items-center p-3 bg-gray-900 z-50">
+        <div class="flex justify-between items-center p-3 bg-gray-900 z-10">
             <div class="flex items-center gap-3">
                 <button type="button" class="p-3 border-2 rounded-full w-8 h-8 flex justify-center items-center" onclick="changeRoute('/admin')">
                     <i class="mdi mdi-arrow-left"></i>

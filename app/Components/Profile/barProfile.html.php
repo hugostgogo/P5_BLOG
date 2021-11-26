@@ -10,7 +10,7 @@ $user = User::getLogged();
     <?php if ($isLogged) : ?>
         <div class="relative">
             <img src="<?= $user->avatar ? $user->avatar : 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png' ?>" class="rounded-full h-12 w-12 cursor-pointer" id="profilePictureButton" />
-            <div class="absolute right-0 flex flex-col bg-gray-700 p-2 rounded gap-2 top-full mt-2 right-0 shadow-lg w-72 hidden" id="profileMenu">
+            <div class="absolute right-0 flex flex-col bg-gray-700 p-2 rounded gap-2 top-full mt-2 right-0 shadow-lg w-72 hidden z-50" id="profileMenu">
                 <?php if($user->role == 1): ?>
                 <button class="p-1 bg-gray-800 rounded flex items-center justify-between w-full px-3 hover:bg-black transition-all duration-500 ease-in-out" onclick="changeRoute('/admin')">
                     Administration
