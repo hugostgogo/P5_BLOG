@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 
 <head>
 	<title><?php echo isset($title) ? $title : config('blog.title') ?></title>
