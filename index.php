@@ -160,10 +160,10 @@ $router->post('/update/user/:id', function ($id) {
 
 $router->post('/update/user/password/:id', function ($id) {
 	$url = UsersController::resetPassword($id);
-	// redirect("/update/password/code/$url");
+	redirect("/update/password/code/$url");
 });
 
-$router->post('/update/:url', function ($url) {
+$router->post('/update/save/:url', function ($url) {
 	$errors = [];
 
 	$user = ResetPassword::retrieve($url);
