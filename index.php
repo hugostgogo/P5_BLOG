@@ -308,7 +308,7 @@ function noRights() { render('norights', []); }
 $router->get('/norights', function () {noRights();});
 
 $router->get('/admin', function () {
-	if (!isAdmin()) return noRights();
+	if (!isAdmin()) noRights()();
 
 	$comments = CommentsController::getUnconfirmed();
 
@@ -319,7 +319,7 @@ $router->get('/admin', function () {
 
 
 $router->get('/admin/comments/validation', function () {
-	if (!isAdmin()) return noRights();
+	if (!isAdmin()) noRights()();
 
 	$comments = CommentsController::getUnconfirmed();
 
@@ -329,7 +329,7 @@ $router->get('/admin/comments/validation', function () {
 });
 
 $router->post('/admin/comments/validation/:id', function ($commentId) {
-	if (!isAdmin()) return noRights();
+	if (!isAdmin()) noRights()();
 
 	$comment = CommentsController::getSingle($commentId);
 	$comment->activate($_POST['state']);
@@ -342,7 +342,7 @@ $router->post('/admin/comments/validation/:id', function ($commentId) {
 });
 
 $router->get('/admin/users', function () {
-	if (!isAdmin()) return noRights();
+	if (!isAdmin()) noRights()();
 
 	$users = User::getAll();
 
@@ -358,7 +358,7 @@ $router->get('/admin/users', function () {
 });
 
 $router->post('/admin/users', function () {
-	if (!isAdmin()) return noRights();
+	if (!isAdmin()) noRights()();
 
 	User::register($_POST);
 	$users = User::getAll();
@@ -371,7 +371,7 @@ $router->post('/admin/users', function () {
 });
 
 $router->get('/admin/user/:id', function ($id) {
-	if (!isAdmin()) return noRights();
+	if (!isAdmin()) noRights()();
 
 	$user = User::get($id);
 
