@@ -287,8 +287,6 @@ $router->post('/article/update', function () {
 });
 
 $router->post('/articles', function () {
-	header('Access-Control-Allow-Origin: *');
-
 	$currentUser = User::getLogged();
 
 	$args = $_POST;

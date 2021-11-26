@@ -118,7 +118,7 @@ class ResetPassword
         $charactersLength = strlen($characters);
         $randomString = '';
         for ($i = 0; $i < 9; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
+            $randomString .= $characters[random_int(0, $charactersLength - 1)];
         }
         return $randomString;
     }
@@ -129,7 +129,7 @@ class ResetPassword
         $charactersLength = strlen($characters);
         $randomString = '';
         for ($i = 0; $i < 50; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
+            $randomString .= $characters[random_int(0, $charactersLength - 1)];
         }
         return $randomString;
     }
