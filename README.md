@@ -41,9 +41,16 @@ layout = 'layout'
 
 [db] // CONFIGURATION BASE DE DONEES
 name='blog'
-host='localhost'
-username='root'
+host='127.0.0.1'
+username=''
 password=''
+
+[SMTP]
+host=""
+port=2525
+auth=true
+username=""
+password=""
 
 [links] // LIENS RESEAUX SOCIAUX
 github='http://github.com/hugostgogo'

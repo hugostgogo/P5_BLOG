@@ -43,11 +43,11 @@ class Email extends Base
         $phpmailer = new PHPMailer();
         $phpmailer->isSMTP();
         $phpmailer->isHTML();
-        $phpmailer->Host = 'smtp.mailtrap.io';
-        $phpmailer->SMTPAuth = true;
-        $phpmailer->Port = 2525;
-        $phpmailer->Username = 'bee2dc5222362a';
-        $phpmailer->Password = '1f389ad8bf1cd5';
+        $phpmailer->Host =  config('SMTP.host');
+        $phpmailer->SMTPAuth = config('SMTP.auth');
+        $phpmailer->Port = config('SMTP.port');
+        $phpmailer->Username = config('SMTP.username');
+        $phpmailer->Password = config('SMTP.password');
 
         $phpmailer->setFrom('huglemoal@gmail.com', 'BLOG DE HUGO');
         $phpmailer->addAddress($this->to);
