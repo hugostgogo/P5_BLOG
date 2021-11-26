@@ -39,12 +39,17 @@ session_start();
 function isAdmin () { return User::isAdmin(); }
 function isLogged () { return User::isLogged(); }
 function getLogged () { return User::getLogged(); }
+function not_found () { render('404'); }
 
 $router = new Router($_GET['url']);
 
 
 $router->get('/arbo', function () {
 	render('arbo');
+});
+
+$router->get('/notfound', function () {
+	render('404');
 });
 
 
@@ -308,10 +313,12 @@ $router->post('/comments', function () {
 
 function noRights() { render('norights', []); }
 
-$router->get('/norights', function () {noRights();});
+$router->get('/norights', function () {
+	noRights();
+});
 
 $router->get('/admin', function () {
-	if (!isAdmin()) noRights()();
+	if (!isAdmin()) noRights();
 
 	$comments = CommentsController::getUnconfirmed();
 
