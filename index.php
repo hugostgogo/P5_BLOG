@@ -37,6 +37,8 @@ if (config('app.DEBUG')) {
 session_start();
 
 function isAdmin () { return User::isAdmin(); }
+function isLogged () { return User::isLogged(); }
+function getLogged () { return User::getLogged(); }
 
 $router = new Router($_GET['url']);
 
@@ -296,8 +298,9 @@ $router->post('/articles', function () {
 // COMMENTS PART --------------------------------------------------------------------------
 
 $router->post('/comments', function () {
+	$post_id = $_POST['post_id'];
 	$result = CommentsController::create($_POST);
-	var_dump($result);
+	redirect("/article/$post_id");
 });
 
 
