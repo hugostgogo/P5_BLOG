@@ -303,7 +303,7 @@ $router->post('/comments', function () {
 
 // ADMIN PART --------------------------------------------------------------------------
 
-function noRights() { return render('norights', []); }
+function noRights() { render('norights', []); }
 
 $router->get('/norights', function () {noRights();});
 
