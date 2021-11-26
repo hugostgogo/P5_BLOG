@@ -34,7 +34,7 @@ class DB
 
     public static function insert($table, $attributes)
     {
-        $conn = new PDO('mysql:host=localhost;dbname=blog', 'root', '');
+        $conn = new PDO("mysql:host=$host;dbname=$dbname", config('db.username'), config('db.password'));
 
         $sql = "INSERT INTO " . $table . " (";
         foreach (array_keys($attributes) as $index => $key) {
@@ -55,7 +55,7 @@ class DB
 
     public static function update($table, $id, $attributes)
     {
-        $conn = new PDO('mysql:host=localhost;dbname=blog', 'root', '');
+        $conn = new PDO("mysql:host=$host;dbname=$dbname", config('db.username'), config('db.password'));
 
         foreach($attributes as $key => $value) {
             if (trim($value) === "") unset($attributes[$key]);
@@ -79,7 +79,7 @@ class DB
 
     public static function delete($table, $id)
     {
-        $conn = new PDO('mysql:host=localhost;dbname=blog', 'root', '');
+        $conn = new PDO("mysql:host=$host;dbname=$dbname", config('db.username'), config('db.password'));
 
         $sql = "DELETE FROM $table WHERE id = :id";
         
